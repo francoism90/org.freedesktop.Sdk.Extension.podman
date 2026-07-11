@@ -2,6 +2,8 @@
 
 This repository provides the Flatpak [Podman](https://podman.io/) SDK extension: `org.freedesktop.Sdk.Extension.podman`.
 
+It will allow you to use Podman as the default container runtime for Flatpak applications.
+
 Numerous attempts were made to include this SDK upstream, but they were [rejected](https://github.com/flathub/flathub/pull/8677) unfortunately.
 
 Instead, this extension is built with [Flatter](https://github.com/andyholmes/flatter) using GitHub Actions and is signed with a GPG key. Please note that you use this extension at your own risk. Alternatively, you can build the extension yourself using Flatpak Builder (see Build instructions).
