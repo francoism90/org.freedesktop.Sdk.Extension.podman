@@ -44,7 +44,7 @@ modules:
       - type: file
         path: org.freedesktop.Sdk.Extension.podman.metainfo.xml
       - type: file
-        path: podman.sh
+        path: podman-shim.sh
 
   - name: podman_compose
     buildsystem: simple

@@ -81,23 +81,6 @@ export PODMAN_FLATPAK_FORCE_REMOTE=1
 podman ps   # actually runs podman-remote ps
 ```
 
-### Overruling docker
-
-This extension also ships a `docker` command, but it stays out of the way
-by default: unless `PODMAN_FLATPAK_OVERRULE_DOCKER` is set (to any
-non-empty value), `docker` defers to whatever other `docker` is found on
-`PATH` (for example a real Docker SDK extension), so installing this
-extension won't silently hijack it.
-
-Set `PODMAN_FLATPAK_OVERRULE_DOCKER` to make `docker` run through podman
-instead (combine with `PODMAN_FLATPAK_FORCE_REMOTE` to route it through
-`podman-remote`):
-
-```bash
-export PODMAN_FLATPAK_OVERRULE_DOCKER=1
-docker ps   # actually runs podman ps
-```
-
 ### PhpStorm
 
 To use this extension with [PhpStorm](https://github.com/flathub/com.jetbrains.PhpStorm):
