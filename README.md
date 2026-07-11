@@ -39,7 +39,13 @@ git clone https://github.com/francoism90/org.freedesktop.Sdk.Extension.podman.gi
 cd org.freedesktop.Sdk.Extension.podman
 ```
 
-Use `org.flatpak.Builder` to build and install the extension:
+Install `org.flatpak.Builder`:
+
+```bash
+flatpak install --user org.flatpak.Builder
+```
+
+Use Flatpak Builder to build and install the extension:
 
 ```bash
 flatpak run org.flatpak.Builder --install --user --force-clean --repo=repo build-dir org.freedesktop.Sdk.Extension.podman.yml
