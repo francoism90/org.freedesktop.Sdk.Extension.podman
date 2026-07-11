@@ -4,7 +4,7 @@ This repository provides the Flatpak [Podman](https://podman.io/) SDK extension:
 
 It will allow you to use Podman as the default container runtime for Flatpak applications.
 
-> NOTE: Numerous attempts were made to include this SDK upstream, but they were [rejected](https://github.com/flathub/flathub/pull/8677).
+> **NOTE**: Numerous attempts were made to include this SDK upstream, but they were [rejected](https://github.com/flathub/flathub/pull/8677).
 >
 > Instead, this extension is built with [Flatter](https://github.com/andyholmes/flatter) using GitHub Actions and is signed with a GPG key. Please note that you use this extension at your own risk. Alternatively, you can build the extension yourself using Flatpak Builder (see Build instructions).
 
@@ -61,7 +61,7 @@ To use the Podman SDK for a specific Flatpak app (e.g. `com.visualstudio.code`),
 flatpak override --user --env=FLATPAK_ENABLE_SDK_EXT=podman app-id
 ```
 
-> TIP: You can also use Flatseal to set `FLATPAK_ENABLE_SDK_EXT=podman` as an environment variable and grant socket access for your Flatpak apps.
+> **TIP**: You can also use [Flatseal](https://flathub.org/en/apps/com.github.tchx84.Flatseal) to set `FLATPAK_ENABLE_SDK_EXT=podman` as an environment variable and grant socket access for your Flatpak apps.
 
 For applications that require Podman socket support, enable the user service and grant the application read-only filesystem access to the socket:
 
