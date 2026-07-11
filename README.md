@@ -1,6 +1,6 @@
 # org.freedesktop.Sdk.Extension.podman
 
-This repository provides the Flatpak [Podman](https://podman.io/) extension: `org.freedesktop.Sdk.Extension.podman`.
+This repository provides the Flatpak [Podman](https://podman.io/) SDK extension: `org.freedesktop.Sdk.Extension.podman`.
 
 Numerous attempts were made to include this SDK upstream, but they were [rejected](https://github.com/flathub/flathub/pull/8677) unfortunately.
 
@@ -83,43 +83,18 @@ default it runs the local `podman` binary. Set `PODMAN_FLATPAK_FORCE_REMOTE`
 connection is usable:
 
 ```bash
-export PODMAN_FLATPAK_FORCE_REMOTE=1
+flatpak override --user --env=PODMAN_FLATPAK_FORCE_REMOTE=1 app-id
+```
+
+This will make the `podman` command transparently redirect to `podman-remote` when running inside the Flatpak app:
+
+```bash
 podman ps   # actually runs podman-remote ps
 ```
 
-### PhpStorm
-
-To use this extension with [PhpStorm](https://github.com/flathub/com.jetbrains.PhpStorm):
-
-1. Set the connection type to **Podman** in the settings.
-2. If required for full container integration, explicitly set the Podman socket path to: `$XDG_RUNTIME_DIR/podman/podman.sock`
-
-### Visual Studio Code / VSCodium
-
-To use with [VSCode](https://github.com/flathub/com.visualstudio.code), first allow access to the Podman socket:
-
-```bash
-flatpak override --user --filesystem=xdg-run/podman:ro com.visualstudio.code
-```
-
-Open VSCode, run the command `Preferences: Open User Settings (JSON)`, and append the following configuration:
-
-```json
-"containers.composeCommand": "/usr/lib/sdk/podman/bin/podman-compose",
-"containers.containerCommand": "/usr/lib/sdk/podman/bin/podman-remote",
-"dev.containers.dockerComposePath": "/usr/lib/sdk/podman/bin/podman-compose",
-"dev.containers.dockerPath": "/usr/lib/sdk/podman/bin/podman-remote",
-"dev.containers.dockerSocketPath": "/run/user/<UID>/podman/podman.sock",
-"docker.dockerPath": "/usr/lib/sdk/podman/bin/podman-remote"
-```
-
-> **Note:** Replace `<UID>` with your actual user ID running the socket (you can find this by running `id -u` in your terminal).
-
-Restart the editor to apply the changes.
-
 ### Devcontainers
 
-Update your project's `devcontainer.json` file with `runArgs` optimized for Podman:
+When needed, update the project's `devcontainer.json` file with `runArgs` optimized for Podman:
 
 ```json
 {
@@ -142,3 +117,67 @@ If certain devcontainer images fail to build, you may need to force the Docker f
   }
 }
 ```
+
+### Visual Studio Code / VSCodium
+
+To use with [VSCode](https://github.com/flathub/com.visualstudio.code), first allow access to the Podman socket:
+
+```bash
+flatpak override --user --filesystem=xdg-run/podman:ro com.visualstudio.code
+```
+
+Open VSCode, run the command `Preferences: Open User Settings (JSON)`, and append the following configuration:
+
+```json
+{
+  "containers.composeCommand": "/usr/lib/sdk/podman/bin/podman-compose",
+  "containers.containerCommand": "/usr/lib/sdk/podman/bin/podman-remote",
+  "dev.containers.dockerComposePath": "/usr/lib/sdk/podman/bin/podman-compose",
+  "dev.containers.dockerPath": "/usr/lib/sdk/podman/bin/podman-remote",
+  "dev.containers.dockerSocketPath": "/run/user/<UID>/podman/podman.sock",
+  "docker.dockerPath": "/usr/lib/sdk/podman/bin/podman-remote"
+}
+```
+
+> **Note:** Replace `<UID>` with your actual user ID running the socket (you can find this by running `id -u` in your terminal).
+
+Restart the editor to apply the changes.
+
+### Zed / Zed Preview
+
+To use this extension with [Zed](https://github.com/flathub/com.zed.Zed) or [Zed Preview](https://github.com/flathub/com.zed.ZedPreview):
+
+1. Update the Zed settings to use the Podman:
+
+```json
+{
+  "use_podman": true
+}
+```
+
+2. Set the `PODMAN_FLATPAK_FORCE_REMOTE` environment variable to `1` for Zed or Zed Preview:
+
+```bash
+flatpak override --user --env=PODMAN_FLATPAK_FORCE_REMOTE=1 com.zed.Zed
+```
+
+```bash
+flatpak override --user --env=PODMAN_FLATPAK_FORCE_REMOTE=1 com.zed.ZedPreview
+```
+
+3. Allow access to the Podman socket:
+
+```bash
+flatpak override --user --filesystem=xdg-run/podman:ro com.zed.Zed
+```
+
+```bash
+flatpak override --user --filesystem=xdg-run/podman:ro com.zed.ZedPreview
+```
+
+### PhpStorm
+
+To use this extension with [PhpStorm](https://github.com/flathub/com.jetbrains.PhpStorm):
+
+1. Set the connection type to **Podman** in the settings.
+2. If required for full container integration, explicitly set the Podman socket path to: `$XDG_RUNTIME_DIR/podman/podman.sock`
