@@ -143,7 +143,7 @@ Open VSCode, run the command `Preferences: Open User Settings (JSON)`, and appen
 
 > **Note:** Replace `<UID>` with your actual user ID running the socket (you can find this by running `id -u` in your terminal).
 
-Restart the editor to apply the changes.
+Restart VSCode to apply the changes.
 
 ### Zed / Zed Preview
 
@@ -177,9 +177,20 @@ flatpak override --user --filesystem=xdg-run/podman:ro com.zed.Zed
 flatpak override --user --filesystem=xdg-run/podman:ro com.zed.ZedPreview
 ```
 
+Restart Zed or Zed Preview to apply the changes.
+
 ### PhpStorm
 
 To use this extension with [PhpStorm](https://github.com/flathub/com.jetbrains.PhpStorm):
 
-1. Set the connection type to **Podman** in the settings.
-2. If required for full container integration, explicitly set the Podman socket path to: `$XDG_RUNTIME_DIR/podman/podman.sock`
+1. Allow access to the Podman socket:
+
+```bash
+flatpak override --user --filesystem=xdg-run/podman:ro com.jetbrains.PhpStorm
+```
+
+2. Update the connection type to **Podman** in the settings.
+
+3. Optional: If required for full container integration, explicitly set the Podman socket path to: `$XDG_RUNTIME_DIR/podman/podman.sock`
+
+Restart PhpStorm to apply the changes.
