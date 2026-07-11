@@ -1,8 +1,8 @@
 id: org.freedesktop.Sdk.Extension.podman
-branch: '25.08'
+branch: "25.08"
 runtime: org.freedesktop.Sdk
 sdk: org.freedesktop.Sdk
-runtime-version: '25.08'
+runtime-version: "25.08"
 build-extension: true
 separate-locales: false
 sdk-extensions:
@@ -17,17 +17,18 @@ cleanup:
   - /lib/cmake
   - /lib/pkgconfig
   - /man
-  - '*.a'
-  - '*.la'
-  - '*.pyc'
+  - "*.a"
+  - "*.la"
+  - "*.pyc"
 modules:
   - name: podman
     buildsystem: simple
     build-commands:
       - make PREFIX=${FLATPAK_DEST} podman podman-remote
     post-install:
-      - install -Dm755 bin/podman -t ${FLATPAK_DEST}/bin/
-      - install -Dm755 bin/podman-remote -t ${FLATPAK_DEST}/bin/
+      - install -Dm755 bin/podman ${FLATPAK_DEST}/bin/podman-cli
+      - install -Dm755 bin/podman-remote ${FLATPAK_DEST}/bin/podman-remote
+      - install -Dm755 podman-shim.sh ${FLATPAK_DEST}/bin/podman
       - install -Dm644 -t $FLATPAK_DEST/share/metainfo $FLATPAK_ID.metainfo.xml
     sources:
       - type: git
@@ -42,6 +43,8 @@ modules:
           version-query: $tag | sub("^v"; "")
       - type: file
         path: org.freedesktop.Sdk.Extension.podman.metainfo.xml
+      - type: file
+        path: podman.sh
 
   - name: podman_compose
     buildsystem: simple

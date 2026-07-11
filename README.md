@@ -2,9 +2,9 @@
 
 This repository provides the Flatpak [Podman](https://podman.io/) extension: `org.freedesktop.Sdk.Extension.podman`.
 
-Numerous attempts were made to include this SDK upstream, but they were [rejected](https://github.com/flathub/flathub/pull/8677).
+Numerous attempts were made to include this SDK upstream, but they were [rejected](https://github.com/flathub/flathub/pull/8677) unfortunately.
 
-Instead, this extension is built with [Flatter](https://github.com/andyholmes/flatter) using GitHub Actions and is signed with a GPG key. Please note that you use this extension at your own risk. Alternatively, you can build the extension yourself.
+Instead, this extension is built with [Flatter](https://github.com/andyholmes/flatter) using GitHub Actions and is signed with a GPG key. Please note that you use this extension at your own risk. Alternatively, you can build the extension yourself using Flatpak Builder (see Build instructions).
 
 ## Quick Start
 
@@ -67,6 +67,36 @@ flatpak override --user --filesystem=xdg-run/podman:ro app-id
 
 The socket path will then be available inside the Flatpak application at:
 `$XDG_RUNTIME_DIR/podman/podman.sock`
+
+### Forcing podman-remote
+
+The `podman` command provided by this extension is a wrapper script. By
+default it runs the local `podman` binary. Set `PODMAN_FLATPAK_FORCE_REMOTE`
+(to any non-empty value) to make it transparently redirect to
+`podman-remote` instead, for example when only a remote/socket-based Podman
+connection is usable:
+
+```bash
+export PODMAN_FLATPAK_FORCE_REMOTE=1
+podman ps   # actually runs podman-remote ps
+```
+
+### Overruling docker
+
+This extension also ships a `docker` command, but it stays out of the way
+by default: unless `PODMAN_FLATPAK_OVERRULE_DOCKER` is set (to any
+non-empty value), `docker` defers to whatever other `docker` is found on
+`PATH` (for example a real Docker SDK extension), so installing this
+extension won't silently hijack it.
+
+Set `PODMAN_FLATPAK_OVERRULE_DOCKER` to make `docker` run through podman
+instead (combine with `PODMAN_FLATPAK_FORCE_REMOTE` to route it through
+`podman-remote`):
+
+```bash
+export PODMAN_FLATPAK_OVERRULE_DOCKER=1
+docker ps   # actually runs podman ps
+```
 
 ### PhpStorm
 
