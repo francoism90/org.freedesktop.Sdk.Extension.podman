@@ -34,17 +34,17 @@ flatpak install --user francoism90-podman org.freedesktop.Sdk.Extension.podman
 
 It is possible to build the extension yourself using [Flatpak Builder](https://flathub.org/en/apps/org.flatpak.Builder).
 
+First, install `org.flatpak.Builder`:
+
+```bash
+flatpak install --user org.flatpak.Builder
+```
+
 Git clone the repository:
 
 ```bash
 git clone https://github.com/francoism90/org.freedesktop.Sdk.Extension.podman.git
-cd org.freedesktop.Sdk.Extension.podman
-```
-
-Install `org.flatpak.Builder`:
-
-```bash
-flatpak install --user org.flatpak.Builder
+cd org.freedesktop.Sdk.Extension.podman/src/org.freedesktop.Sdk.Extension.podman
 ```
 
 Use Flatpak Builder to build and install the extension:
@@ -55,11 +55,13 @@ flatpak run org.flatpak.Builder --install --user --force-clean --repo=repo build
 
 ## Usage
 
-To use the Podman SDK, enable the environment variable for your target application:
+To use the Podman SDK for a specific Flatpak app (e.g. `com.visualstudio.code`), enable the environment variable for your target application:
 
 ```bash
-FLATPAK_ENABLE_SDK_EXT=podman
+flatpak override --user --env=FLATPAK_ENABLE_SDK_EXT=podman app-id
 ```
+
+> TIP: You can also use Flatseal to set `FLATPAK_ENABLE_SDK_EXT=podman` as an environment variable and grant socket access for your Flatpak apps.
 
 For applications that require Podman socket support, enable the user service and grant the application read-only filesystem access to the socket:
 
@@ -67,7 +69,7 @@ For applications that require Podman socket support, enable the user service and
 systemctl --user enable podman.socket --now
 ```
 
-Grant socket access to your Flatpak app (replace app-id):
+Afterwards, grant socket access to the Flatpak app:
 
 ```bash
 flatpak override --user --filesystem=xdg-run/podman:ro app-id
