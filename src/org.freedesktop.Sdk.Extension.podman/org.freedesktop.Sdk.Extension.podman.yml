@@ -1,8 +1,8 @@
 id: org.freedesktop.Sdk.Extension.podman
-branch: "25.08"
+branch: '25.08'
 runtime: org.freedesktop.Sdk
 sdk: org.freedesktop.Sdk
-runtime-version: "25.08"
+runtime-version: '25.08'
 build-extension: true
 separate-locales: false
 sdk-extensions:
@@ -17,9 +17,9 @@ cleanup:
   - /lib/cmake
   - /lib/pkgconfig
   - /man
-  - "*.a"
-  - "*.la"
-  - "*.pyc"
+  - '*.a'
+  - '*.la'
+  - '*.pyc'
 modules:
   - name: podman
     buildsystem: simple
@@ -33,8 +33,8 @@ modules:
     sources:
       - type: git
         url: https://github.com/containers/podman.git
-        tag: v5.8.3
-        commit: 93dbfd0d86ee57f8f91801f61ce57dd880a4725f
+        tag: v6.0.1
+        commit: 4cabbe61fa3a27fafc4a3ee1226e38ae1664ae57
         x-checker-data:
           type: json
           url: https://api.github.com/repos/containers/podman/releases/latest
