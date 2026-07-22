@@ -27,10 +27,6 @@ jobs:
         with:
           gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
 
-      - name: Generate CNAME
-        run: |
-          echo "flatter.andyholmes.ca" > CNAME
-
       - name: Install SDK Extensions
         run: |
           flatpak install --noninteractive flathub org.freedesktop.Sdk.Extension.golang//25.08
@@ -43,7 +39,6 @@ jobs:
           gpg-sign: ${{ steps.gpg.outputs.fingerprint }}
           upload-pages-artifact: true
           upload-pages-includes: |
-            CNAME
             index.html
             README.md
 
