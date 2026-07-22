@@ -2,19 +2,13 @@ name: Flatter (signed)
 
 on:
   push:
-    branches: [main]
-    paths:
-      - "src/**"
-      - ".github/workflows/flatter.yml"
-  pull_request:
-    branches: [main]
   workflow_dispatch:
   schedule:
     # Rebuild weekly to catch upstream changes
     - cron: "0 2 * * 0"
 
 jobs:
-  build:
+  flatter:
     name: Build Flatpak Packages
     runs-on: ubuntu-latest
     container:
@@ -33,15 +27,17 @@ jobs:
         with:
           gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
 
+      - name: Generate CNAME
+        run: |
+          echo "flatter.andyholmes.ca" > CNAME
+
       - name: Install SDK Extensions
         run: |
-          # Install any required SDK extensions here
           flatpak install --noninteractive flathub org.freedesktop.Sdk.Extension.golang//25.08
 
       - name: Build Packages
         uses: andyholmes/flatter@main
         with:
-          # A list of package manifests to build
           files: |
             src/org.freedesktop.Sdk.Extension.podman/org.freedesktop.Sdk.Extension.podman.yml
           gpg-sign: ${{ steps.gpg.outputs.fingerprint }}
@@ -52,11 +48,9 @@ jobs:
             README.md
 
   deploy:
-    name: Deploy to GitHub Pages
-    # ONLY run deployment if it is NOT a pull request
-    if: github.event_name != 'pull_request'
+    name: Deploy
     runs-on: ubuntu-latest
-    needs: build
+    needs: flatter
     permissions:
       pages: write
       id-token: write
