@@ -13,7 +13,7 @@ It will allow you to use Podman as the default container runtime for Flatpak app
 Add the remote repository:
 
 ```bash
-flatpak --user remote-add --if-not-exists francoism90-podman https://francoism90.github.io/org.freedesktop.Sdk.Extension.podman/index.flatpakrepo
+flatpak remote-add --if-not-exists francoism90-podman https://francoism90.github.io/org.freedesktop.Sdk.Extension.podman/index.flatpakrepo
 ```
 
 Update the repository:
@@ -25,7 +25,7 @@ flatpak update
 Install the extension:
 
 ```bash
-flatpak install --user francoism90-podman org.freedesktop.Sdk.Extension.podman
+flatpak install francoism90-podman org.freedesktop.Sdk.Extension.podman
 ```
 
 > Note: The extension will automatically update when you run `flatpak update`.
@@ -37,7 +37,7 @@ It is possible to build the extension yourself using [Flatpak Builder](https://f
 First, install `org.flatpak.Builder`:
 
 ```bash
-flatpak install --user org.flatpak.Builder
+flatpak install org.flatpak.Builder
 ```
 
 Git clone the repository:
