@@ -15,24 +15,24 @@ jobs:
       contents: read
       actions: write
     container:
-      image: ghcr.io/andyholmes/flatter/ubuntu:latest
+      image: ghcr.io/andyholmes/flatter/freedesktop:25.08
       options: --privileged
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Setup GPG
         # Skip GPG signing for pull requests (requires secrets from repo owner)
         if: ${{ github.triggering_actor == github.repository_owner && github.event_name != 'pull_request' }}
         id: gpg
-        uses: crazy-max/ghaction-import-gpg@v6
+        uses: crazy-max/ghaction-import-gpg@v7
         with:
           gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
 
       - name: Install SDK Extensions
         run: |
-          flatpak install --noninteractive flathub org.freedesktop.Sdk.Extension.golang//24.08
+          flatpak install --noninteractive flathub org.freedesktop.Sdk.Extension.golang//25.08
 
       - name: Build Packages
         uses: andyholmes/flatter@main
@@ -59,4 +59,4 @@ jobs:
     steps:
       - name: GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
