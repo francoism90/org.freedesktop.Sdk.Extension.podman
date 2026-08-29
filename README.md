@@ -138,12 +138,12 @@ Open VSCode, run the command `Preferences: Open User Settings (JSON)`, and appen
   "containers.containerCommand": "/usr/lib/sdk/podman/bin/podman-remote",
   "dev.containers.dockerComposePath": "/usr/lib/sdk/podman/bin/podman-compose",
   "dev.containers.dockerPath": "/usr/lib/sdk/podman/bin/podman-remote",
-  "dev.containers.dockerSocketPath": "/run/user/<UID>/podman/podman.sock",
+  "dev.containers.dockerSocketPath": "$XDG_RUNTIME_DIR/podman/podman.sock",
   "docker.dockerPath": "/usr/lib/sdk/podman/bin/podman-remote"
 }
 ```
 
-> **Note:** Replace `<UID>` with your actual user ID running the socket (you can find this by running `id -u` in your terminal).
+> **NOTE:** remove `/usr/lib/sdk/podman/bin` path, if you run this locally.
 
 Restart VSCode to apply the changes.
 
