@@ -33,8 +33,8 @@ modules:
     sources:
       - type: git
         url: https://github.com/containers/podman.git
-        tag: v6.0.2
-        commit: b28edb9ad70ce4317dc762ee9ce0a6d081d154e9
+        tag: v6.1.1
+        commit: 8303f2e25b675ea7f82099d615c60969aec15870
         x-checker-data:
           type: json
           url: https://api.github.com/repos/containers/podman/releases/latest
@@ -68,8 +68,8 @@ modules:
         path: patches/10-podman-compose-syspath.patch
         sha256: 2c1c961bbd035be3ac2f8631770b95dc2bec3eb46eed7e2bb974b83cc7a3679e
       - type: file
-        url: https://files.pythonhosted.org/packages/82/ed/0301aeeac3e5353ef3d94b6ec08bbcabd04a72018415dcb29e588514bba8/python_dotenv-1.2.2.tar.gz
-        sha256: 2c371a91fbd7ba082c2c1dc1f8bf89ca22564a087c2c287cd9b662adde799cf3
+        url: https://files.pythonhosted.org/packages/6a/53/ed9d74092561d4b01a2ef1349d52cdbc135e526c245f366b089cfca6de49/python_dotenv-1.2.3.tar.gz
+        sha256: a20a594dabeaa385725aa239d5244871c143ecb356add8a20fcf23773a6c3a35
         x-checker-data:
           type: pypi
           name: python-dotenv
