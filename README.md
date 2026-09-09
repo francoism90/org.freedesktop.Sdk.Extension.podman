@@ -78,13 +78,16 @@ flatpak override --user --filesystem=xdg-run/podman:ro app-id
 The socket path will then be available inside the Flatpak application at:
 `$XDG_RUNTIME_DIR/podman/podman.sock`
 
-### Forcing podman-remote
+### Environment Variables
 
 The `podman` command provided by this extension is a wrapper script. By
-default it runs the local `podman` binary. Set `PODMAN_FLATPAK_FORCE_REMOTE`
-(to any non-empty value) to make it transparently redirect to
-`podman-remote` instead, for example when only a remote/socket-based Podman
-connection is usable:
+default it runs the local `podman` binary bundled with the extension.
+
+#### Forcing the system
+
+Set `PODMAN_FLATPAK_FORCE_REMOTE` (to any non-empty value) to make it
+transparently redirect to `podman-remote` instead, for example when only a
+remote/socket-based Podman connection is usable:
 
 ```bash
 flatpak override --user --env=PODMAN_FLATPAK_FORCE_REMOTE=1 app-id
@@ -95,6 +98,25 @@ This will make the `podman` command transparently redirect to `podman-remote` wh
 ```bash
 podman ps   # actually runs podman-remote ps
 ```
+
+#### Forcing the local
+
+Set `PODMAN_FLATPAK_FORCE_LOCAL` (to any non-empty value) to make the
+`podman` command skip both binaries bundled with this SDK extension and
+instead run the first `podman` found on `PATH` outside the extension's own
+`bin` directory, for example a system-installed Podman that should take
+precedence:
+
+```bash
+flatpak override --user --env=PODMAN_FLATPAK_FORCE_LOCAL=1 app-id
+```
+
+If no other `podman` is found on `PATH`, the command fails with an error
+instead of silently falling back to the bundled binary.
+
+> **NOTE**: If both `PODMAN_FLATPAK_FORCE_LOCAL` and
+> `PODMAN_FLATPAK_FORCE_REMOTE` are set, `PODMAN_FLATPAK_FORCE_LOCAL` takes
+> precedence.
 
 ### Devcontainers
 
